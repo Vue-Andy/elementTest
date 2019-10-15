@@ -26,20 +26,12 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="100">
     </el-pagination> -->
-    <JxzjButton typeSwitch display @change='handleSwitch' :activeValue='1' :inactiveValue='0' size='medium'></JxzjButton>  <!--开关-->
-    <JxzjButton :iconSrc='iconSrc' display></JxzjButton>  <!--图标按钮-->
-    <JxzjButton display>文字按钮</JxzjButton>  <!--文字按钮-->
-    <JxzjButton display plain>文字按钮</JxzjButton>  <!--白色文字按钮-->
-    <JxzjButton display plain addIcon>文字按钮</JxzjButton>  <!--白色文字按钮带图标-->
-    <JxzjButton display type='text'>文字按钮</JxzjButton>  <!--纯文字文本，可点击-->
   </div>
 </template>
 
 <script>
 // import axios from 'axios'
 
-import JxzjButton from "../../jxzj-ui/button/button.vue";
-import logo from '../../assets/logo.png'
 import { getMusicByName, getToken,typeNum } from '../../utils/api'
 export default {
   name:'buttonCon',
@@ -58,11 +50,9 @@ export default {
       // 分页字段
       currentPage:1,
       pageSize:10,
-      iconSrc:logo
     }
   },
   components:{
-    JxzjButton
   },
   methods:{
     // 根据歌曲名获取歌曲
@@ -110,9 +100,6 @@ export default {
       console.log(e.target)
       e.target.src = url
     },
-    handleSwitch(val) {
-      console.log(val)
-    }
   },
   created(){
     var that = this
