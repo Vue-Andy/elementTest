@@ -6,9 +6,8 @@
           <!-- <span slot='first'>first slot</span>
           <span slot='second'>second slot</span>
           <span>我是插槽内容</span> -->
-
-          <template slot-scope="user">
-            <span v-for="item in user.data" :key="item.id">
+          <template slot-scope="param">
+            <span v-for="item in param.data" :key="item.id">
               {{item}}
             </span>
           </template>
@@ -29,7 +28,7 @@
           </el-menu>
         </transition> -->
         
-        <el-main style='flex:1;'>
+        <el-main style='flex:1;overflow:hidden;'>
           <div class="spread">
             <el-button round  @click='isSpread=!isSpread'>{{isSpread?'收起':'展开'}}</el-button>
           </div>
