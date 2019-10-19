@@ -39,15 +39,9 @@
               <el-menu-item v-for='(sub_item,index) in item' :index="sub_item.path" v-if='index > 0' :key='sub_item.path'>{{sub_item.name}}</el-menu-item>
             </el-menu-item-group>
           </el-menu>
-<<<<<<< HEAD
-        </transition>
-
-        <el-main style='flex:1;'>
-=======
         </transition> -->
         
         <el-main style='flex:1;overflow:hidden;'>
->>>>>>> de050e36d4da8ca7c4311989df0152a8f5148a04
           <div class="spread">
             <el-button round  @click='isSpread=!isSpread'>{{isSpread?'收起':'展开'}}</el-button>
           </div>
