@@ -3,9 +3,6 @@
     <span>
       vue-elementUI test
     </span>
-    <span v-for="item in user" :key="item.id">
-      {{item.name}}
-    </span>
     <!-- <slot>默认内容</slot>
     <slot name='first'></slot>
     <slot name='second'></slot> -->
