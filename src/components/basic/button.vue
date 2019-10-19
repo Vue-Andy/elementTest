@@ -1,5 +1,77 @@
 <template>
   <div>
+    <div>
+      <el-button type='default'>默认按钮</el-button>
+      <el-button type='primary'>primary</el-button>
+      <el-button type='success'>success</el-button>
+      <el-button type='warning'>warning</el-button>
+      <el-button type='danger'>danger</el-button>
+      <el-button type='info'>info</el-button>
+    </div>
+    <div>
+      <el-button plain>朴素按钮</el-button>
+      <el-button type='primary' plain>primary</el-button>
+      <el-button type='success' plain>success</el-button>
+      <el-button type='warning' plain>warning</el-button>
+      <el-button type='danger' plain>danger</el-button>
+      <el-button type='info' plain>info</el-button>
+    </div>
+    <div>
+      <el-button plain round>圆形按钮</el-button>
+      <el-button type='primary' plain round>primary</el-button>
+      <el-button type='success' plain round>success</el-button>
+      <el-button type='warning' plain round>warning</el-button>
+      <el-button type='danger' plain round>danger</el-button>
+      <el-button type='info' plain round>info</el-button>
+    </div>
+    <div>
+      <el-button plain round disabled>圆形按钮</el-button>
+      <el-button type='primary' plain round disabled>primary</el-button>
+      <el-button type='success' plain round disabled>success</el-button>
+      <el-button type='warning' plain round disabled>warning</el-button>
+      <el-button type='danger' plain round disabled>danger</el-button>
+      <el-button type='info' plain round disabled>info</el-button>
+    </div>
+    <div>
+      <el-button type='text'>text</el-button>
+      <el-button type='text' disabled>text-disabled</el-button>
+    </div>
+    <div>
+      <el-button type='primary'>默认大小</el-button>
+      <el-button type='primary' size='midium'>midium</el-button>
+      <el-button type='success' size='small'>small</el-button>
+      <el-button type='warning' size='mini'>mini</el-button>
+    </div>
+    <div>
+      <el-button type="primary" icon="el-icon-edit"></el-button>
+      <el-button type="primary" icon="el-icon-share"></el-button>
+      <el-button type="primary" icon="el-icon-delete"></el-button>
+      <el-button type="primary" icon="el-icon-search">搜索</el-button>
+      <el-button type="primary">上传<i class="el-icon-upload el-icon--right"></i></el-button>
+    </div>
+    <div>
+      <el-button-group>
+        <el-button type="primary" icon="el-icon-arrow-left">上一页</el-button>
+        <el-button type="primary">下一页<i class="el-icon-arrow-right el-icon--right"></i></el-button>
+      </el-button-group>
+      <el-button-group>
+        <el-button type="primary" icon="el-icon-edit"></el-button>
+        <el-button type="primary" icon="el-icon-share"></el-button>
+        <el-button type="primary" icon="el-icon-delete"></el-button>
+      </el-button-group>
+    </div>
+    <div>
+      <el-button type="primary" :loading="true">加载中</el-button>
+      <el-button type="primary" :loading="loading">加载中</el-button>
+      <el-button type="primary" loading>加载中</el-button>
+    </div>
+    <div>
+      <el-button autofocus native-type="submit">提交</el-button>
+    </div>
+    <div>
+      <!-- 自定义图标 -->
+      <el-button type="primary" icon="el-icon-diy"></el-button>
+    </div>
     <!-- <h1>专辑名称：{{hktk.albumname}}</h1>
     <h6>歌曲名称：{{hktk.songname}}-----演唱者：{{hktk.singer}}</h6>
     <img :src="hktk.albumUrl" alt="">
@@ -37,6 +109,7 @@ export default {
   name:'buttonCon',
   data(){
     return {
+      loading:true,
       hktk:{
         albumname:'',
         songname:'',
@@ -147,7 +220,7 @@ export default {
             albumUrl:albumUrl,
             audioUrl:audioUrl
           }
-          that.musicList.push(songObj) 
+          that.musicList.push(songObj)
           that.musicListByPage = that.musicList.slice(0,10)
         })
       }
@@ -160,7 +233,7 @@ export default {
     /**
     * p：页数，从1开始
     * n：每一页显示的条数
-    * w：搜索关键字 
+    * w：搜索关键字
     */
     typeNum(123)
   }
@@ -168,6 +241,9 @@ export default {
 </script>
 
 <style>
+  div{
+    margin:10px;
+  }
 li{list-style: none;}
 .musicBox{
   margin-bottom:30px;
@@ -180,6 +256,7 @@ li{list-style: none;}
 .musicBox::-webkit-scrollbar{
   display:none;
 }
+.el-icon-diy:before {
+  content: "\E6C4";
+}
 </style>
-
-

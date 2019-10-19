@@ -1,17 +1,78 @@
 <template>
   <div>
-    container
+    <h2>有header或者footer垂直排列1</h2>
+    <el-container>
+      <el-header>el-header</el-header>
+      <el-main>el-main</el-main>
+    </el-container>
+    <h2>有header或者footer垂直排列2</h2>
+    <el-container>
+      <el-header>el-header</el-header>
+      <el-main>el-main</el-main>
+      <el-footer>el-footer</el-footer>
+    </el-container>
+    <h2>否则水平排列</h2>
+    <el-container>
+      <el-aside>el-aside</el-aside>
+      <el-main>el-main</el-main>
+    </el-container>
+    <h2>多层container组合实现不同排列1</h2>
+    <el-container>
+      <el-header>el-header</el-header>
+      <el-container>
+        <el-aside>el-aside</el-aside>
+        <el-main>el-main</el-main>
+      </el-container>
+    </el-container>
+    <h2>多层container组合实现不同排列2</h2>
+    <el-container>
+    	<el-header>el-header</el-header>
+      <el-container>
+      	<el-aside>el-aside</el-aside>
+        <el-container>
+          <el-main>el-main</el-main>
+          <el-footer>el-footer</el-footer>
+        </el-container>
+      </el-container>
+    </el-container>
+    <h2>多层container组合实现不同排列3</h2>
+    <el-container>
+      <el-aside>el-aside</el-aside>
+      <el-container>
+        <el-header>el-header</el-header>
+        <el-main>el-main</el-main>
+      </el-container>
+    </el-container>
+    <h2>多层container组合实现不同排列4</h2>
+    <el-container>
+      <el-aside>el-aside</el-aside>
+      <el-container>
+        <el-header>el-header</el-header>
+        <el-main>el-main</el-main>
+        <el-footer>el-footer</el-footer>
+      </el-container>
+    </el-container>
   </div>
 </template>
 
 <script>
 export default {
-  
+
 }
 </script>
 
-<style>
-
+<style scoped>
+  .el-header{
+    background:#67C23A;
+  }
+  .el-aside{
+    background:#E6A23C;
+  }
+  .el-main{
+    background:#F56C6C;
+  }
+  .el-footer{
+    color:#fff;
+    background:#909399;
+  }
 </style>
-
-

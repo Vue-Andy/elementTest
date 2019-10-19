@@ -2,76 +2,25 @@
   <div>
     <div>{{sex|gender|extendGender}}</div>
 
-    <el-table
-      v-loading='loading'
-      ref='myTable'
-      :data='tableData'
-      max-height='600'
-      size='medium'
-      :highlight-current-row='isHighlight'
-      @current-change='handleCurrentChange'
-      border
-      :show-header='isShowheader'
-      stripe
-      :fit='isfit'
-      :row-class-name="hasZeroOrFiveInId"
-      :row-style='setRowStyle'
-      style="width: 100%">
+    <el-table v-loading='loading' ref='myTable' :data='tableData' max-height='600' size='medium'
+      :highlight-current-row='isHighlight' @current-change='handleCurrentChange'
+      border :show-header='isShowheader' stripe :fit='isfit'
+      :row-class-name="hasZeroOrFiveInId" :row-style='setRowStyle' style="width: 99.9%">
       <el-table-column type='selection'></el-table-column>
       <el-table-column type='index' fixed></el-table-column>
-      <el-table-column
-        prop='id'
-        label='编号'
-        width='50'
-        fixed
-      ></el-table-column>
+      <el-table-column prop='id' label='编号' width='50' fixed></el-table-column>
       <el-table-column label='基本信息' align='center'>
-        <el-table-column
-          prop='name'
-          label='姓名'
-          width='100'
-        ></el-table-column>
-        <el-table-column
-          prop='gender'
-          label='性别'
-          width='100'
-          :formatter='formatGender'
-        ></el-table-column>
-        <el-table-column
-          prop='age'
-          label='年龄'
-          width='100'
-        ></el-table-column>
-        <el-table-column
-          prop='birthDate'
-          label='出生日期'
-          :formatter='formatBirthday'
-        ></el-table-column>
+        <el-table-column prop='name' label='姓名' width='100'></el-table-column>
+        <el-table-column prop='gender' label='性别' width='100' :formatter='formatGender'></el-table-column>
+        <el-table-column prop='age' label='年龄' width='100'></el-table-column>
+        <el-table-column prop='birthDate' label='出生日期' :formatter='formatBirthday'></el-table-column>
       </el-table-column>
       <el-table-column label='地址信息' align='center'>
-        <el-table-column
-          prop='site'
-          label='籍贯'
-          width='200'
-        ></el-table-column>
-        <el-table-column
-          prop='addr'
-          label='现住市名'
-          width='100'
-        ></el-table-column>
-        <el-table-column
-          width='400'
-          prop='detail'
-          label='详细地址'
-          show-overflow-tooltip
-        ></el-table-column>
+        <el-table-column prop='site' label='籍贯' width='200'></el-table-column>
+        <el-table-column prop='addr' label='现住市名' width='100'></el-table-column>
+        <el-table-column width='400' prop='detail' label='详细地址' show-overflow-tooltip></el-table-column>
       </el-table-column>
-      <el-table-column
-        width='200'
-        label='操作'
-        fixed='right'
-        align='center'
-      >
+      <el-table-column width='200' label='操作' fixed='right' align='center'>
         <template slot-scope="scope">
           <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
           <el-button type="text" size="small">编辑</el-button>
@@ -79,14 +28,8 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange1"
-      :current-page.sync="currentPage"
-      :page-sizes="[5, 10, 25]"
-      :page-size="pageSize"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="50">
+    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange1" :current-page.sync="currentPage"
+      :page-sizes="[5, 10, 25]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="50">
     </el-pagination>
     <div style="margin-top: 20px">
       <el-button @click='loading=!loading'>切换加载</el-button>
@@ -103,7 +46,7 @@ export default {
   name:'tableCom',
   data(){
     return {
-      loading:true,
+      loading:false,
       sex:'male',
       isfit:true,
       isShowheader:true,
@@ -255,7 +198,7 @@ export default {
       return cellValue === 'male' ? '男' : '女'
     },
     formatBirthday(row, column, cellValue){
-      return cellValue.slice(0,4) + "年" + (cellValue.slice(4,5) == "0" ? cellValue.slice(5,6) : cellValue.slice(4,6)) + '月' + 
+      return cellValue.slice(0,4) + "年" + (cellValue.slice(4,5) == "0" ? cellValue.slice(5,6) : cellValue.slice(4,6)) + '月' +
       (cellValue.slice(6,7) == '0' ? cellValue.slice(7,8) : cellValue.slice(6)) + '日'
     },
     handleSizeChange(val){
@@ -315,5 +258,3 @@ export default {
   /* background:brown; */
 }
 </style>
-
-
