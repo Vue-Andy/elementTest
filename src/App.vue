@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <el-container>
-      <el-header style='overflow:auto;'>
+      <el-header>
         <headerCon>
           <!-- <span slot='first'>first slot</span>
           <span slot='second'>second slot</span>
@@ -39,7 +39,7 @@
               <el-menu-item v-for='(sub_item,index) in item' :index="sub_item.path" v-if='index > 0' :key='sub_item.path'>{{sub_item.name}}</el-menu-item>
             </el-menu-item-group>
           </el-menu>
-        </transition> -->
+        </transition>
         
         <el-main style='flex:1;overflow:hidden;'>
           <div class="spread">

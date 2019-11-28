@@ -3,9 +3,9 @@
     <div>{{sex|gender|extendGender}}</div>
 
     <el-table v-loading='loading' ref='myTable' :data='tableData' max-height='600' size='medium'
-      :highlight-current-row='isHighlight' @current-change='handleCurrentChange'
+      :highlight-current-row='isHighlight' @current-change='handleCurrentChange' @selection-change='handleSelectionChange'
       border :show-header='isShowheader' stripe :fit='isfit'
-      :row-class-name="hasZeroOrFiveInId" :row-style='setRowStyle' style="width: 99.9%">
+      :row-class-name="hasZeroOrFiveInId" :row-style='setRowStyle' style="width: 99.9%" @row-click='rowClick'>
       <el-table-column type='selection'></el-table-column>
       <el-table-column type='index' fixed></el-table-column>
       <el-table-column prop='id' label='编号' width='50' fixed></el-table-column>
@@ -28,7 +28,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange1" :current-page.sync="currentPage"
+    <el-pagination @size-change="handleSizeChange" @current-change="pageNumberChange" :current-page.sync="currentPage"
       :page-sizes="[5, 10, 25]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="50">
     </el-pagination>
     <div style="margin-top: 20px">
@@ -56,117 +56,121 @@ export default {
       pageSize:10,
       currentPage:1,
       tableData:[],
-      tableData1:[{
-        id:0,name:'pzh0',gender:'male',age:'0',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:1,name:'pzh1',gender:'female',age:'1',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:2,name:'pzh2',gender:'male',age:'2',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:3,name:'pzh3',gender:'female',age:'3',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:4,name:'pzh4',gender:'female',age:'4',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:5,name:'pzh5',gender:'male',age:'5',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:6,name:'pzh6',gender:'female',age:'6',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:7,name:'pzh7',gender:'male',age:'7',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:8,name:'pzh8',gender:'male',age:'8',birthDate:'19990219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:9,name:'pzh9',gender:'male',age:'9',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:10,name:'pzh10',gender:'female',age:'10',birthDate:'19890319',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:11,name:'pzh11',gender:'male',age:'11',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:12,name:'pzh12',gender:'male',age:'12',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:13,name:'pzh13',gender:'male',age:'13',birthDate:'19890519',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:14,name:'pzh14',gender:'male',age:'14',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:15,name:'pzh15',gender:'female',age:'15',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:16,name:'pzh16',gender:'male',age:'16',birthDate:'19890919',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:17,name:'pzh17',gender:'female',age:'17',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:18,name:'pzh18',gender:'female',age:'18',birthDate:'19891219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:19,name:'pzh19',gender:'male',age:'19',birthDate:'19891219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      },{
-        id:20,name:'pzh0',gender:'male',age:'0',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:21,name:'pzh1',gender:'female',age:'1',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:22,name:'pzh2',gender:'male',age:'2',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:23,name:'pzh3',gender:'female',age:'3',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:24,name:'pzh4',gender:'female',age:'4',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:25,name:'pzh5',gender:'male',age:'5',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:26,name:'pzh6',gender:'female',age:'6',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:27,name:'pzh7',gender:'male',age:'7',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:28,name:'pzh8',gender:'male',age:'8',birthDate:'19990219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:29,name:'pzh9',gender:'male',age:'9',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:30,name:'pzh0',gender:'male',age:'0',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:1,name:'pzh1',gender:'female',age:'1',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:32,name:'pzh2',gender:'male',age:'2',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:33,name:'pzh3',gender:'female',age:'3',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:34,name:'pzh4',gender:'female',age:'4',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:35,name:'pzh5',gender:'male',age:'5',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:36,name:'pzh6',gender:'female',age:'6',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:37,name:'pzh7',gender:'male',age:'7',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:38,name:'pzh8',gender:'male',age:'8',birthDate:'19990219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:39,name:'pzh9',gender:'male',age:'9',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:40,name:'pzh0',gender:'male',age:'0',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:41,name:'pzh1',gender:'female',age:'1',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:42,name:'pzh2',gender:'male',age:'2',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:43,name:'pzh3',gender:'female',age:'3',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:44,name:'pzh4',gender:'female',age:'4',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:45,name:'pzh5',gender:'male',age:'5',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:46,name:'pzh6',gender:'female',age:'6',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:47,name:'pzh7',gender:'male',age:'7',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:48,name:'pzh8',gender:'male',age:'8',birthDate:'19990219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }, {
-        id:49,name:'pzh9',gender:'male',age:'9',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
-      }]
+      tableDataAll:[
+        {
+          id:0,name:'pzh0',gender:'male',age:'0',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:1,name:'pzh1',gender:'female',age:'1',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:2,name:'pzh2',gender:'male',age:'2',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:3,name:'pzh3',gender:'female',age:'3',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:4,name:'pzh4',gender:'female',age:'4',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:5,name:'pzh5',gender:'male',age:'5',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:6,name:'pzh6',gender:'female',age:'6',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:7,name:'pzh7',gender:'male',age:'7',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:8,name:'pzh8',gender:'male',age:'8',birthDate:'19990219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:9,name:'pzh9',gender:'male',age:'9',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:10,name:'pzh10',gender:'female',age:'10',birthDate:'19890319',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:11,name:'pzh11',gender:'male',age:'11',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:12,name:'pzh12',gender:'male',age:'12',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:13,name:'pzh13',gender:'male',age:'13',birthDate:'19890519',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:14,name:'pzh14',gender:'male',age:'14',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:15,name:'pzh15',gender:'female',age:'15',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:16,name:'pzh16',gender:'male',age:'16',birthDate:'19890919',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:17,name:'pzh17',gender:'female',age:'17',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:18,name:'pzh18',gender:'female',age:'18',birthDate:'19891219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:19,name:'pzh19',gender:'male',age:'19',birthDate:'19891219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        },{
+          id:20,name:'pzh0',gender:'male',age:'0',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:21,name:'pzh1',gender:'female',age:'1',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:22,name:'pzh2',gender:'male',age:'2',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:23,name:'pzh3',gender:'female',age:'3',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:24,name:'pzh4',gender:'female',age:'4',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:25,name:'pzh5',gender:'male',age:'5',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:26,name:'pzh6',gender:'female',age:'6',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:27,name:'pzh7',gender:'male',age:'7',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:28,name:'pzh8',gender:'male',age:'8',birthDate:'19990219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:29,name:'pzh9',gender:'male',age:'9',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:30,name:'pzh0',gender:'male',age:'0',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:1,name:'pzh1',gender:'female',age:'1',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:32,name:'pzh2',gender:'male',age:'2',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:33,name:'pzh3',gender:'female',age:'3',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:34,name:'pzh4',gender:'female',age:'4',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:35,name:'pzh5',gender:'male',age:'5',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:36,name:'pzh6',gender:'female',age:'6',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:37,name:'pzh7',gender:'male',age:'7',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:38,name:'pzh8',gender:'male',age:'8',birthDate:'19990219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:39,name:'pzh9',gender:'male',age:'9',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:40,name:'pzh0',gender:'male',age:'0',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:41,name:'pzh1',gender:'female',age:'1',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:42,name:'pzh2',gender:'male',age:'2',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:43,name:'pzh3',gender:'female',age:'3',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:44,name:'pzh4',gender:'female',age:'4',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:45,name:'pzh5',gender:'male',age:'5',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:46,name:'pzh6',gender:'female',age:'6',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:47,name:'pzh7',gender:'male',age:'7',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:48,name:'pzh8',gender:'male',age:'8',birthDate:'19990219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }, {
+          id:49,name:'pzh9',gender:'male',age:'9',birthDate:'19890219',site:'湖南-衡阳',addr:'长沙',detail:'湖南省长沙市高新区尖山路39号中电软件园一期7栋厂房303室'
+        }
+      ],
+      multipleSelection:[]
     }
   },
+  // 局部指令的定义
   directives: {
     changeColor: {
-      // 指令的定义
       inserted: function (el) {
         el.style.color='blue'
       }
     }
   },
+  // 局部过滤器的定义
   filters: {
     gender(value) {
       return value === 'male' ? '男' : '女'
@@ -176,9 +180,13 @@ export default {
     }
   },
   created(){
-    this.tableData = this.tableData1.slice((this.currentPage-1)*this.pageSize,this.pageSize*this.currentPage)
+    this.tableData = this.tableDataAll.slice((this.currentPage-1)*this.pageSize,this.pageSize*this.currentPage)
   },
   methods:{
+    // 点击某一行时
+    rowClick(row,event,column) {
+      console.log(row,event,column)
+    },
     // row-class-name设置
     hasZeroOrFiveInId(row, rowIndex) {
       if (row.rowIndex.toString().indexOf('0') !== -1) {
@@ -194,6 +202,7 @@ export default {
         return 'color:green'
       }
     },
+    // 格式化某一列数据
     formatGender(row, column, cellValue){
       return cellValue === 'male' ? '男' : '女'
     },
@@ -205,16 +214,17 @@ export default {
       this.pageSize = val
       this.tableData = this.tableData1.slice((this.currentPage-1)*this.pageSize,this.pageSize*this.currentPage)
     },
-    handleCurrentChange1(val){
+    // 翻页处理
+    pageNumberChange(val){
       console.log(val)
       this.currentPage = val
       this.tableData = this.tableData1.slice((this.currentPage-1)*this.pageSize,this.pageSize*this.currentPage)
     },
-    // 查看
+    // 点击某一行的查看按钮时
     handleClick(rowData){
       console.log(rowData)
     },
-    // 删除
+    // 点击某一行的删除按钮时
     deleteData(index){
       this.tableData.splice(index,1)
     },
@@ -223,13 +233,14 @@ export default {
       console.log(currentRow,oldCurrentRow)
       this.currentRow = currentRow
     },
-    // 单选--为何取消选择无效？？？
+    // 选择行--只是改变行样式高亮
     setCurrent(row){
       console.log(arguments[0])
       this.$refs.myTable.setCurrentRow(row);
     },
     // 多选
     toggleSelection(rows) {
+      console.log(rows)
       if (rows) {
         rows.forEach(row => {
           this.$refs.myTable.toggleRowSelection(row)
@@ -238,13 +249,27 @@ export default {
         this.$refs.myTable.clearSelection()
       }
     },
-    // 取消多选
+    // 点击CheckBox时
     handleSelectionChange(val) {
       this.multipleSelection = val;
+      console.log(val)
     }
   },
   mounted(){
     this.$refs.myTable.setCurrentRow(this.tableData[0]);
+    let rows = []
+    // this.tableData.filter((item,index)=>{
+    //   if(item.id % 2 == 0) {
+    //     rows.push(this.tableData[index])
+    //     this.$set(item,'useSku',true)
+    //   }
+    // })
+    // this.toggleSelection(rows)
+    //  默认全选
+    for(let i in this.tableData) {
+      rows.push(this.tableData[i])
+    }
+    this.toggleSelection(rows)
   }
 }
 </script>
